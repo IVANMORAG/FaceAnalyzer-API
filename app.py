@@ -116,5 +116,28 @@ def reprocesar_imagen():
 
     return jsonify({"message": "Imagen reprocesada correctamente", "images": processed_images})
 
+# Ruta para eliminar una imagen
+@app.route('/eliminar_imagen', methods=['POST'])
+def eliminar_imagen():
+    data = request.get_json()
+    image_url = data.get('imageUrl')
+
+    if not image_url:
+        return jsonify({'success': False, 'message': 'No se proporcionó una URL de imagen'}), 400
+    
+    # Asumimos que la imagen está en la carpeta 'imagenesCliente'
+    imagenes_cliente_path = os.path.join(app.config['IMAGENES_CLIENTE_FOLDER'], os.path.basename(image_url))
+
+    # Verificar si la imagen existe
+    if not os.path.exists(imagenes_cliente_path):
+        return jsonify({'success': False, 'message': 'La imagen no existe en el servidor'}), 404
+
+    try:
+        # Eliminar el archivo
+        os.remove(imagenes_cliente_path)
+        return jsonify({'success': True, 'message': 'Imagen eliminada con éxito'}), 200
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

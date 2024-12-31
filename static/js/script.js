@@ -21,12 +21,73 @@ async function cargarHistorial() {
                 imgElement.style.maxWidth = '100%';
                 imgElement.style.cursor = 'pointer'; // Cambiar cursor para indicar que es clickeable
                 imgElement.dataset.imageUrl = imgUrl; // Guardar la URL de la imagen como dato
-                historicoImagesDiv.appendChild(imgElement);
+
+                // Crear el botón de eliminar
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Eliminar';
+                deleteButton.classList.add('delete-btn');
+                deleteButton.dataset.imageUrl = imgUrl; // Asociar el botón con la URL de la imagen
+
+                // Añadir la imagen y el botón de eliminación al contenedor
+                const imageContainer = document.createElement('div');
+                imageContainer.appendChild(imgElement);
+                imageContainer.appendChild(deleteButton);
+
+                historicoImagesDiv.appendChild(imageContainer);
+
+                // Añadir evento de clic al botón de eliminar
+                deleteButton.addEventListener('click', () => {
+                    eliminarImagen(imgUrl);
+                });
             });
         }
     } catch (error) {
         console.error('Error al cargar las imágenes del historial:', error);
     }
+}
+
+// Función para eliminar una imagen
+async function eliminarImagen(imageUrl) {
+    // Usamos SweetAlert para confirmar la eliminación
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¡Esta acción no se puede deshacer!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                // Enviar solicitud al backend para eliminar la imagen
+                const response = await fetch('/eliminar_imagen', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ imageUrl }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error al eliminar la imagen');
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Eliminar la imagen del DOM
+                    cargarHistorial(); // Volver a cargar el historial para reflejar los cambios
+                    Swal.fire('¡Eliminado!', 'La imagen ha sido eliminada.', 'success');
+                } else {
+                    Swal.fire('Error', 'No se pudo eliminar la imagen.', 'error');
+                }
+            } catch (error) {
+                console.error('Error al eliminar la imagen:', error);
+                Swal.fire('Error', 'Ocurrió un error al eliminar la imagen.', 'error');
+            }
+        }
+    });
 }
 
 // Delegar el evento de clic a un contenedor principal (historicoImages)
