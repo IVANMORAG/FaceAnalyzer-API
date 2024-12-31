@@ -1,20 +1,28 @@
-# Usa una imagen base de Python
 FROM python:3.12-slim
 
-# Establece el directorio de trabajo dentro del contenedor
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    python3-dev \
+    libssl-dev \
+    wget \
+    libgl1-mesa-glx \
+    libglib2.0-0 && \
+    rm -rf /var/lib/apt/lists/*
+
+# Configuración de trabajo
 WORKDIR /app
 
-# Copia el archivo requirements.txt al contenedor
-COPY requirements.txt /app/
+# Copiar los archivos del backend
+COPY . /app
 
-# Instala las dependencias necesarias
-RUN pip install --no-cache-dir -r requirements.txt
+# Instalar dependencias de Python
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# Copia todos los archivos de la aplicación al contenedor
-COPY . /app/
-
-# Expone el puerto en el que Flask escucha (por defecto 5000)
+# Exponer el puerto
 EXPOSE 5000
 
-# Usa el comando de ejecución adecuado para la aplicación Flask
-ENTRYPOINT ["python", "app.py"]
+# Comando para ejecutar la aplicación
+CMD ["python", "app.py"]
