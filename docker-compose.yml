@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"  # API de Flask en el puerto 5000
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
