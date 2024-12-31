@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconocimiento Facial</title>
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Sección de subir imagen -->
+        <div class="upload-section">
+            <h1>Sube una imagen para analizarla</h1>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="image" name="image" accept="image/*">
+                <button type="submit">Subir imagen</button>
+            </form>
+        </div>
+
+        <!-- Sección de imagen original -->
+        <div class="original-image-section">
+            <h2>Imagen original</h2>
+            <div class="image-container">
+                <img id="originalImage" src="" alt="Imagen Original">
+            </div>
+        </div>
+
+        <!-- Sección de historial de imágenes -->
+        <div class="historico-images-section">
+            <h2>Historial de Imágenes Subidas</h2>
+            <div id="historicoImages" class="image-gallery"></div>
+        </div>
+
+
+        <!-- Sección de imágenes procesadas -->
+        <div class="processed-images-section">
+            <h2>Imágenes procesadas</h2>
+            <div id="processedImages" class="image-gallery"></div>
+        </div>
+    </div>
+
+    <!-- Enlace al archivo JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
