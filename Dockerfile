@@ -1,10 +1,6 @@
-# Usa una imagen base de Python (elige una versión compatible con tu aplicación)
-FROM python:3.12-slim
+FROM python:3.12-buster
 
-# Actualiza pip
-RUN pip install --upgrade pip
-
-# Instala las dependencias del sistema necesarias para compilar dlib
+# Instalar dependencias del sistema necesarias para dlib
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
@@ -14,17 +10,13 @@ RUN apt-get update && apt-get install -y \
     libx11-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Crea el directorio de trabajo
+# Crear el directorio de trabajo y copiar el código
 WORKDIR /app
-
-# Copia los archivos de tu proyecto al contenedor
 COPY . .
 
-# Instala las dependencias de Python desde requirements.txt
+# Instalar las dependencias de Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expone el puerto en el que Flask corre
+# Exponer el puerto y correr la app
 EXPOSE 5000
-
-# Define el comando de inicio para la aplicación
 CMD ["python", "app.py"]
