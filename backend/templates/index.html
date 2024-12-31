@@ -4,51 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reconocimiento Facial</title>
-    <style>
-        /* Aquí puedes agregar estilos para mejorar la UI */
-    </style>
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Sube una imagen para analizarla</h1>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" id="image" name="image" accept="image/*">
-        <button type="submit">Subir imagen</button>
-    </form>
+    <div class="container">
+        <!-- Sección de subir imagen -->
+        <div class="upload-section">
+            <h1>Sube una imagen para analizarla</h1>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="image" name="image" accept="image/*">
+                <button type="submit">Subir imagen</button>
+            </form>
+        </div>
 
-    <h2>Imagen original</h2>
-    <img id="originalImage" src="" alt="Imagen Original" style="max-width: 100%;">
+        <!-- Sección de imagen original -->
+        <div class="original-image-section">
+            <h2>Imagen original</h2>
+            <div class="image-container">
+                <img id="originalImage" src="" alt="Imagen Original">
+            </div>
+        </div>
 
-    <h2>Imágenes procesadas</h2>
-    <div id="processedImages"></div>
+        <!-- Sección de imágenes procesadas -->
+        <div class="processed-images-section">
+            <h2>Imágenes procesadas</h2>
+            <div id="processedImages" class="image-gallery"></div>
+        </div>
+    </div>
 
-    <script>
-        const form = document.getElementById('uploadForm');
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData();
-            formData.append('image', document.getElementById('image').files[0]);
-
-            const response = await fetch('/upload', {
-    method: 'POST',
-    body: formData,
-});
-
-const result = await response.json();
-if (result.images) {
-    document.getElementById('originalImage').src = result.images[0];
-
-    const processedImagesDiv = document.getElementById('processedImages');
-    processedImagesDiv.innerHTML = '';
-    result.images.slice(1).forEach(img => {
-        const imgElement = document.createElement('img');
-        imgElement.src = img;
-        imgElement.style.maxWidth = '100%';
-        processedImagesDiv.appendChild(imgElement);
-    });
-}
-
-        });
-    </script>
+    <!-- Enlace al archivo JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

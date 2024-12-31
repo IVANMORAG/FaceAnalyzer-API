@@ -8,6 +8,10 @@ services:
       - "5000:5000"  # API de Flask en el puerto 5000
     networks:
       - app-network
+    volumes:
+      - ./backend:/app  # Monta todo el directorio backend local en el contenedor
+      - ./backend/static:/app/static  # Asegúrate de que la carpeta 'static' sea accesible para el contenedor
+      - ./backend/templates:/app/templates  # Monta la carpeta 'templates' si tienes archivos HTML
 
 networks:
   app-network:
