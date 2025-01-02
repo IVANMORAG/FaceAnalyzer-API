@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory, render_template
 import os
+import uuid
 import cv2
 from utils import process_image  # Simulación de procesamiento
 from flask_cors import CORS
