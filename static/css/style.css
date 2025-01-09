@@ -8,7 +8,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center; /* Centra todo verticalmente */
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
     flex-direction: column;
     text-align: center; /* Centra el texto */
 }

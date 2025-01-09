@@ -37,13 +37,13 @@ def detect_face_points(gray_image, output_image):
     results = face_mesh.process(cv2.cvtColor(gray_image, cv2.COLOR_GRAY2RGB))
     points = []
     
-    # Índices específicos para ojos, cejas, nariz y labios
+    # Índices específicos para ojos, cejas, nariz y labios (menos puntos)
     eye_indices = [33, 133, 362, 263]  # Ojos: arriba, abajo, izquierda, derecha
     eyebrow_indices = [70, 107, 336, 296]  # Cejas: izquierda y derecha de cada ceja
     nose_indices = [1, 197, 5]  # Nariz: centro, izquierda, derecha
     lips_indices = [13, 14, 78, 308]  # Labios: arriba, abajo, izquierda, derecha
     
-    # Combina todos los índices relevantes
+    # Combina todos los índices relevantes (menos puntos que antes)
     relevant_indices = eye_indices + eyebrow_indices + nose_indices + lips_indices
     
     if results.multi_face_landmarks:
@@ -54,11 +54,11 @@ def detect_face_points(gray_image, output_image):
                     y = int(landmark.y * gray_image.shape[0])
                     points.append((x, y))
                     
-                    # Dibuja una X en cada punto sobre la imagen en escala de grises
+                    # Ajustamos el tamaño de la X basado en el tamaño de la imagen (más pequeña)
+                    size = max(3, int(gray_image.shape[1] * 0.01))  # Tamaño más pequeño de la X
                     color = (0, 0, 255)  # Color rojo (BGR)
-                    thickness = 2  # Grosor
-                    size = 7  # Tamaño de la X
-                    # Líneas de la X
+                    thickness = 1  # Grosor más delgado
+                    # Líneas de la X (más pequeñas y delgadas)
                     cv2.line(output_image, (x - size, y - size), (x + size, y + size), color, thickness)
                     cv2.line(output_image, (x - size, y + size), (x + size, y - size), color, thickness)
     
