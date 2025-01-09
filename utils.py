@@ -3,6 +3,7 @@ import mediapipe as mp
 from PIL import Image, ImageEnhance
 import numpy as np
 import os
+from deepface import DeepFace
 
 # Inicializamos el modelo de detección de rostros de MediaPipe
 mp_face_mesh = mp.solutions.face_mesh
@@ -23,6 +24,12 @@ def process_image(image_path):
     
     # Generar imágenes modificadas
     images = generate_modified_images(gray_image_bgr, points)
+    
+    # Detectar la emoción de la imagen
+    emotion = detect_emotion(image)
+    
+    # Escribir la emoción solo en la imagen original
+    images[0] = write_emotion_on_image(images[0], emotion)
     
     # Guardar las imágenes generadas en un buffer de memoria y devolverlas como bytes
     processed_images = []
@@ -101,3 +108,25 @@ def image_to_bytes(image):
         return img_encoded.tobytes()  # Convertir a bytes
     else:
         return None
+
+def detect_emotion(image):
+    """Detecta la emoción en la imagen utilizando DeepFace."""
+    analysis = DeepFace.analyze(image, actions=['emotion'], enforce_detection=False)
+    return analysis[0]['dominant_emotion']
+
+def write_emotion_on_image(image, emotion):
+    """Escribe la emoción en la imagen en un tamaño adecuado y centrado."""
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    font_scale = 1  # Tamaño de la fuente
+    thickness = 2  # Grosor de la fuente
+    color = (0, 0, 0)  # Color negro
+    (w, h), _ = cv2.getTextSize(emotion, font, font_scale, thickness)
+    
+    # Posicionar el texto en el centro
+    x = int((image.shape[1] - w) / 2)
+    y = int(image.shape[0] - 30)  # Ajustar para que esté cerca de la parte inferior
+    
+    # Añadir el texto a la imagen
+    cv2.putText(image, emotion, (x, y), font, font_scale, color, thickness, lineType=cv2.LINE_AA)
+    
+    return image
