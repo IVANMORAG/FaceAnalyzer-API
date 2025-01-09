@@ -13,7 +13,7 @@ decorator==5.1.1
 deepface==0.0.93
 facenet-pytorch==2.6.0
 ffmpeg==1.4
-filelock==3.16.1
+filelock==3.16.1    
 fire==0.7.0
 Flask==3.1.0
 Flask-Cors==5.0.0
