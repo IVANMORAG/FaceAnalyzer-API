@@ -117,13 +117,15 @@ async function reprocesarImagen(imageUrl) {
 
         const result = await response.json();
 
-        if (result.images) {
-            document.getElementById('originalImage').src = imageUrl + '?t=' + new Date().getTime(); // Cache busting
+        if (result.images && result.images.length > 0) {
+            // Set the first image (analyzed) as the original image
+            document.getElementById('originalImage').src = result.images[0] + '?t=' + new Date().getTime(); // Cache busting
 
             const processedImagesDiv = document.getElementById('processedImages');
             processedImagesDiv.innerHTML = ''; // Limpiar imágenes procesadas
 
-            result.images.forEach(img => {
+            // Display the remaining images (variations) in processed images section
+            result.images.slice(1).forEach(img => {
                 const imgElement = document.createElement('img');
                 imgElement.src = img + '?t=' + new Date().getTime(); // Cache busting
                 imgElement.style.maxWidth = '100%';
@@ -132,6 +134,7 @@ async function reprocesarImagen(imageUrl) {
         }
     } catch (error) {
         console.error('Error al reprocesar la imagen:', error);
+        Swal.fire('Error', 'Ocurrió un error al reprocesar la imagen.', 'error');
     }
 }
 
@@ -176,5 +179,6 @@ form.addEventListener('submit', async (e) => {
         }
     } catch (error) {
         console.error('Error al subir la imagen:', error);
+        Swal.fire('Error', 'Ocurrió un error al subir la imagen.', 'error');
     }
 });

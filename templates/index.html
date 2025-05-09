@@ -4,43 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reconocimiento Facial</title>
+    <!-- Enlace a Google Fonts para Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <!-- Enlace al archivo CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </head>
 <body>
-    <div class="container">
-        <!-- Sección de subir imagen -->
-        <div class="upload-section">
-            <h1>CARGE SU IMAGEN</h1>
-            <form id="uploadForm" enctype="multipart/form-data">
-                <input type="file" id="image" name="image" accept="image/*">
-                <button type="submit">Subir imagen</button>
-            </form>
-        </div>
+    <!-- Header -->
+    <header>
+        <h1>RECONOCIMIENTO FACIAL</h1>
+    </header>
 
-        <!-- Sección de imagen original -->
-        <div class="original-image-section">
-            <h2>Imagen original</h2>
-            <div class="image-container">
-                <img id="originalImage" src="" alt="Imagen Original">
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Sección de subir imagen -->
+            <div class="upload-section">
+                <h2>Carge su Imagen</h2>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <input type="file" id="image" name="image" accept="image/*">
+                    <button type="submit">Subir Imagen</button>
+                </form>
+            </div>
+
+            <!-- Sección de historial de imágenes -->
+            <div class="historico-images-section">
+                <h2>Historial de Imágenes Subidas</h2>
+                <div id="historicoImages" class="historico-gallery"></div>
+            </div>
+
+            <!-- Sección de imágenes procesadas -->
+            <div class="processed-images-section">
+                <h2>Imágenes Procesadas</h2>
+                <div id="processedImages" class="image-gallery"></div>
+            </div>
+
+            <!-- Sección de imagen original -->
+            <div class="original-image-section">
+                <h2>Resultado del Análisis</h2>
+                <div class="image-container">
+                    <img id="originalImage" src="" alt="Imagen Original">
+                </div>
             </div>
         </div>
+    </main>
 
-        <!-- Sección de historial de imágenes -->
-        <div class="historico-images-section">
-            <h2>Historial de Imágenes Subidas</h2>
-            <div id="historicoImages" class="historico-gallery"></div>
-        </div>
-
-
-        <!-- Sección de imágenes procesadas -->
-        <div class="processed-images-section">
-            <h2>Imágenes procesadas</h2>
-            <div id="processedImages" class="image-gallery"></div>
-        </div>
-    </div>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Reconocimiento Facial. Iván Mora.</p>
+    </footer>
 
     <!-- Enlace al archivo JS -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
