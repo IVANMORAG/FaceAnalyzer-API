@@ -1,6 +1,10 @@
 # Reconocimiento Facial con Flask
 
-![Proyecto de Reconocimiento Facial](https://images.unsplash.com/photo-1516321318423-ffd5e0b9f981?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80)
+<a target="_blank" align="center">
+  <img align="center" height="450" width="1000" alt="GIF" src="https://github.com/IVANMORAG/MRITumorDetectorAI/blob/main/recursos/MRI-Detector.gif">
+</a>
+
+<br>
 
 ## Descripción
 Este proyecto es una aplicación web desarrollada con Flask que permite subir imágenes, procesarlas para detectar rostros, identificar puntos faciales, detectar emociones y aplicar transformaciones a las imágenes (como rotación, volteo y ajuste de brillo). Utiliza modelos preentrenados de TensorFlow/Keras para el reconocimiento facial y la detección de emociones, e integra ngrok para exponer el servidor local a internet.
