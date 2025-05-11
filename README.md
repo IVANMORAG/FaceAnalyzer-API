@@ -1,4 +1,4 @@
-# Reconocimiento Facial con Flask
+# Reconocimiento Facial
 
 <a target="_blank" align="center">
   <img align="center" height="450" width="1000" alt="GIF" src="https://github.com/IVANMORAG/facial-point-detection/blob/main/recursos/Facial-Point-detector.gif">
