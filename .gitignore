@@ -1,4 +1,23 @@
-emotion/
-__pycache__/
-
+# Ignorar modelos
 models/
+
+# Ignorar archivos de caché de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar entorno virtual
+venv/
+env/
+*.env
+
+# Ignorar datos procesados (si aplica)
+processed_images/
+
+# Ignorar archivos temporales del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar otras configuraciones o archivos de IDEs
+.idea/
+.vscode/
