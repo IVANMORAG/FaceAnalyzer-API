@@ -4,9 +4,35 @@ import uuid
 import cv2
 from utils import process_image  # Simulación de procesamiento
 from flask_cors import CORS
+import time
+import threading
+import subprocess
 
 app = Flask(__name__)
 CORS(app)
+
+# Configuración (puedes mover esto a un archivo Config.py si prefieres)
+class Config:
+    NGROK_DOMAIN = 'poorly-free-insect.ngrok-free.app'
+    FLASK_PORT = 5000
+
+# Función para iniciar ngrok en un hilo separado
+def start_ngrok(domain, port):
+    def run():
+        time.sleep(2)
+        process = subprocess.Popen(
+            ['ngrok', 'http', '--domain='+domain, str(port)],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        time.sleep(2)
+        print(f"\n* NGROK URL FIJADA: https://{domain} -> http://localhost:{port} *\n")
+        return process
+    
+    ngrok_thread = threading.Thread(target=run)
+    ngrok_thread.daemon = True
+    ngrok_thread.start()
+    return ngrok_thread
 
 # Crear carpetas necesarias
 imagenes_cliente_path = os.path.join(os.getcwd(), 'imagenesCliente')
@@ -139,7 +165,10 @@ def eliminar_imagen():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
 
-# Ejecuta la aplicación Flask
+
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    # Iniciar ngrok en un hilo separado
+    start_ngrok(Config.NGROK_DOMAIN, Config.FLASK_PORT)
+    
+    # Iniciar la aplicación Flask
+    app.run(port=Config.FLASK_PORT, debug=True)
