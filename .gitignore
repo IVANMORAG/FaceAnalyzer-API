@@ -10,9 +10,8 @@ __pycache__/
 venv/
 env/
 *.env
+mi_entorno/
 
-# Ignorar datos procesados (si aplica)
-processed_images/
 
 # Ignorar archivos temporales del sistema operativo
 .DS_Store
