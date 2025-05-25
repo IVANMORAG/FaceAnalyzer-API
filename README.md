@@ -9,6 +9,7 @@
 ## Descripción
 Este proyecto es una aplicación web desarrollada con Flask que permite subir imágenes, procesarlas para detectar rostros, identificar puntos faciales, detectar emociones y aplicar transformaciones a las imágenes (como rotación, volteo y ajuste de brillo). Utiliza modelos preentrenados de TensorFlow/Keras para el reconocimiento facial y la detección de emociones, e integra ngrok para exponer el servidor local a internet.
 
+
 ## Características
 - **Carga de Imágenes**: Los usuarios pueden subir imágenes a través de una interfaz web.
 - **Procesamiento de Imágenes**:
